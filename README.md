@@ -16,6 +16,7 @@ See:
 
 1. [article](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers)
 2. [another article](http://www.aerospike.com/blog/node-on-fire/)
+3. [node benchmark helper](https://github.com/nodejs/node/blob/master/benchmark/common.js#L213-L225)
 
 ## Install
 
