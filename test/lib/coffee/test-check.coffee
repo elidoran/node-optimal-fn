@@ -8,7 +8,7 @@ describe 'test optimize.check', ->
 
   verify
     name  : 'with non-optimized function'
-    fn    : -> eval ''
+    fn    : -> [].slice.call arguments ; return
     # args: no args
     # context: no context
     answer: NOT_OPTIMIZED

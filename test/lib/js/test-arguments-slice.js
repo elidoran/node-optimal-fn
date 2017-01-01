@@ -66,30 +66,34 @@ describe('test arguments slicing', function() {
     answer: NOT_OPTIMIZED
   });
 
-  verify({
-    name: 'should optimize using Array.apply to create arguments as an array',
-    fn: function() {
-      var args;
-      args = Array.apply(null, arguments);
-    },
-    args: ['a', 'b'],
-    answer: OPTIMIZED
-  });
-
-  verify({
-    name: 'should optimize using Array.apply and truncating length',
-    fn: function() {
-      var args;
-      args = Array.apply(null, arguments);
-      args.length = 2;
-    },
-    args: [
-      {
-        blah: 'blah'
-      }, 'b', 3
-    ],
-    answer: OPTIMIZED
-  });
+  (function() {
+    var answer, is4;
+    is4 = process.versions.node[0] === '4';
+    answer = is4 ? NOT_OPTIMIZED : OPTIMIZED;
+    verify({
+      name: "should" + (is4 ? ' NOT' : '') + " optimize using Array.apply to create arguments as an array",
+      fn: function() {
+        var args;
+        args = Array.apply(null, arguments);
+      },
+      args: ['a', 'b'],
+      answer: answer
+    });
+    verify({
+      name: "should" + (is4 ? ' NOT' : '') + " optimize using Array.apply and truncating length",
+      fn: function() {
+        var args;
+        args = Array.apply(null, arguments);
+        return args.length = 2;
+      },
+      args: [
+        {
+          blah: 'blah'
+        }, 'b', 3
+      ],
+      answer: answer
+    });
+  })();
 
   verify({
     name: 'should optimize creating with array loop to slice only part of arguments',

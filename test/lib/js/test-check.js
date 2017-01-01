@@ -14,7 +14,7 @@ describe('test optimize.check', function() {
   verify({
     name: 'with non-optimized function',
     fn: function() {
-      return eval('');
+      [].slice.call(arguments);
     },
     answer: NOT_OPTIMIZED
   });

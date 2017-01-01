@@ -33,21 +33,28 @@ describe 'test arguments slicing', ->
     # context: no context
     answer: NOT_OPTIMIZED
 
-  verify
-    name: 'should optimize using Array.apply to create arguments as an array'
-    fn  : -> args = Array.apply null, arguments ; return
-    args: ['a', 'b']
-    # context: no context
-    answer: OPTIMIZED
+  do ->
+    is4 = process.versions.node[0] is '4'
+    answer = if is4 then NOT_OPTIMIZED else OPTIMIZED
 
-  verify
-    name  : 'should optimize using Array.apply and truncating length'
-    fn    : -> # keep only first 2 via truncating
-      args = Array.apply null, arguments
-      args.length = 2
-    args  : [{blah:'blah'}, 'b', 3]
-    # context: no context
-    answer: OPTIMIZED
+    verify
+      name: "should#{if is4 then ' NOT' else ''} optimize using Array.apply to create arguments as an array"
+      fn  : -> args = Array.apply null, arguments ; return
+      args: ['a', 'b']
+      # context: no context
+      answer: answer
+
+    verify
+      name  : "should#{if is4 then ' NOT' else ''} optimize using Array.apply and truncating length"
+      fn    : -> # keep only first 2 via truncating
+        args = Array.apply null, arguments
+        args.length = 2
+        return
+      args  : [{blah:'blah'}, 'b', 3]
+      # context: no context
+      answer: answer
+
+    return
 
   verify
     name  : 'should optimize creating with array loop to slice only part of arguments'
