@@ -10,7 +10,7 @@ Use in benchmarking to optimize before running the benchmark.
 
 Use in analysis to test if your functions can be optimized.
 
-See tests for examples of what optimizes and what doesn't. [[JS]](https://github.com/elidoran/node-optima-fn/tree/master/test/lib/js) [[CS]](https://github.com/elidoran/node-optima-fn/tree/master/test/lib/coffee)
+See tests for examples of what optimizes and what doesn't. [[JS]](https://github.com/elidoran/node-optimal-fn/tree/master/test/lib/js) [[CS]](https://github.com/elidoran/node-optimal-fn/tree/master/test/lib/coffee)
 
 See:
 
