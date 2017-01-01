@@ -12,8 +12,10 @@ Use in analysis to test if your functions can be optimized.
 
 See tests for examples of what optimizes and what doesn't. [[JS]](https://github.com/elidoran/node-optima-fn/tree/master/test/lib/js) [[CS]](https://github.com/elidoran/node-optima-fn/tree/master/test/lib/coffee)
 
-See this [article](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers#3-managing-arguments) to read about this stuff a bit.
-See [another article](http://www.aerospike.com/blog/node-on-fire/)
+See:
+
+1. [article](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers)
+2. [another article](http://www.aerospike.com/blog/node-on-fire/)
 
 ## Install
 
@@ -27,8 +29,10 @@ npm install @optimal/fn --save
 ```javascript
 // 1. attempt to optimize a function and get its status
 var optimize = require('@optimal/fn')
-  , fn = function() { }
-  , result = optimize(fn)
+
+function fn() { }
+
+var result = optimize(fn)
 
 console.log(result)
 // {
