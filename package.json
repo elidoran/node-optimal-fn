@@ -4,6 +4,7 @@
   "description": "Force V8 to try to optimize a function and check optimization status.",
   "main": "lib",
   "keywords": [
+    "optimal",
     "optimize",
     "function",
     "v8",
@@ -12,16 +13,20 @@
   "author": "Eli Doran <eli+npm@elidoran.com>",
   "license": "MIT",
   "scripts": {
-    "build": "coffee --bare --compile lib",
-    "clean": "npm run coverage-clean && rm -rf lib/*.js",
+    "build": "coffee --bare --compile --no-header lib",
+    "clean": "rm -rf lib/*.js",
     "prepublish": "npm run build",
     "postpublish": "npm run clean",
     "test": "_mocha --compilers coffee:coffee-script/register --reporter spec --check-leaks test/lib/coffee test/lib/js",
-    "coverage": "istanbul cover _mocha -- --compilers coffee:coffee-script/register --require coffee-coverage/register-istanbul -R spec  test/lib/coffee test/lib/js",
-    "publish-coverage": "npm run coverage && cat coverage/lcov.info | coveralls",
-    "coverage-lcov": "istanbul cover _mocha --report lcovonly -- --compilers coffee:coffee-script/register --require coffee-coverage/register-istanbul -R spec  test/lib/coffee test/lib/js",
-    "coverage-clean": "rm -rf ./coverage",
-    "travis": "npm run clean && npm run coverage-lcov"
+    "test4": "nave use 4.8 npm test",
+    "test6": "nave use 6.10 npm test",
+    "test7": "nave use 7.10 npm test",
+    "test8": "nave use 8.0 npm test",
+    "test-all": "npm run test4 && npm run test6 && npm run test7 && npm run test8",
+    "pre-coverage": "npm run clean",
+    "coverage": "istanbul cover _mocha -- --compilers coffee:coffee-script/register --require build/coverage.js -R spec  test/lib/coffee test/lib/js",
+    "pre-coverage-lcov": "npm run clean",
+    "coverage-lcov": "istanbul cover _mocha --report lcovonly -- --compilers coffee:coffee-script/register --require build/coverage.js -R spec  test/lib/coffee test/lib/js"
   },
   "repository": {
     "type": "git",
@@ -29,12 +34,12 @@
   },
   "bugs": "http://github.com/elidoran/node-optimal-fn/issues",
   "devDependencies": {
-    "coffee-coverage": "^1.0.1",
-    "coffee-script": "^1.12.1",
-    "coveralls": "^2.11.15",
+    "coffee-coverage": "^2.0.1",
+    "coffee-script": "^1.12.6",
+    "coveralls": "^2.13.1",
     "istanbul": "^0.4.5",
-    "mocha": "^3.2.0",
-    "mocha-lcov-reporter": "^1.2.0"
+    "mocha": "^3.4.2",
+    "mocha-lcov-reporter": "^1.3.0"
   },
   "dependencies": {},
   "engines": {
