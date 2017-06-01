@@ -9,7 +9,7 @@ coverage.register({
 
   basePath: require('path').resolve(__dirname, '..'),
 
-  exclude: ['test', 'node_modules', '.git', 'build', 'docs' ],
+  exclude: ['node_modules', '.git', 'build', 'docs', 'examples', 'test' ],
 
   coverageVar: coverageVar,
 
