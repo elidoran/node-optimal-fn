@@ -13,6 +13,7 @@
   "author": "Eli Doran <eli+npm@elidoran.com>",
   "license": "MIT",
   "scripts": {
+    "lint": "coffeelint -f build/coffeelint.json lib",
     "build": "coffee --bare --compile --no-header lib",
     "clean": "rm -rf lib/*.js",
     "prepublish": "npm run build",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "coffee-coverage": "^2.0.1",
     "coffee-script": "^1.12.6",
+    "coffeelint": "^1.16.0",
     "coveralls": "^2.13.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.4.2",
