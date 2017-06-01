@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/%40optimal%2Ffn.svg)](http://badge.fury.io/js/%40optimal%2Ffn)
 [![Coverage Status](https://coveralls.io/repos/github/elidoran/node-optimal-fn/badge.svg?branch=master)](https://coveralls.io/github/elidoran/node-optimal-fn?branch=master)
 
-Force V8 to try to optimize a function and check optimization status.
+Force V8 to try to optimize a function and check optimization status in nodes 4, 6, 7, and 8.
 
 Use in benchmarking to optimize before running the benchmark.
 
@@ -17,6 +17,19 @@ See:
 1. [article](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers)
 2. [another article](http://www.aerospike.com/blog/node-on-fire/)
 3. [node benchmark helper](https://github.com/nodejs/node/blob/master/benchmark/common.js#L213-L225)
+4. [node 8+ runtime/runtime.h](https://github.com/v8/v8/blob/master/src/runtime/runtime.h) for new optimization status bit mask
+
+    ```c++
+    enum class OptimizationStatus {
+      kIsFunction = 1 << 0,      // 1
+      kNeverOptimize = 1 << 1,   // 2
+      kAlwaysOptimize = 1 << 2,  // 4
+      kMaybeDeopted = 1 << 3,    // 8
+      kOptimized = 1 << 4,       // 16
+      kTurboFanned = 1 << 5,     // 32
+      kInterpreted = 1 << 6,     // 64
+    };
+    ```
 
 ## Install
 
