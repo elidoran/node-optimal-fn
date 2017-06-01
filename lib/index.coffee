@@ -13,7 +13,7 @@ enable = ->
     # Node 4 added v8, so, before that, it'll throw an error.
     # Can't cause in other Node versions, so, don't cover this
     ### !pragma coverage-skip-next ###
-    throw new Error 'Unable to set flag during runtime. Try setting \'--allow_natives_syntax\' via command line.'
+    throw new Error 'Unable to set flag. Set \'--allow_natives_syntax\' via command line.'
 
 # fn - the function to try to optimize
 # thiz - the `this` context to use (may be undefined)
