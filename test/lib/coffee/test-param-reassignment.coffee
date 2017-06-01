@@ -10,14 +10,14 @@ describe 'test param reassignment STRICT', ->
     fn  : `function fnNullReassign(a) { if (a === void 0) a = {}; }`
     args: ['a']
     # context: no context
-    answer: OPTIMIZED
+    answer: OPTIMIZED()
 
   verify
     name: 'should optimize a function with null check'
     fn  : (a,b) -> b ?= {}
     args: [{blah:'blah'}]
     # context: no context
-    answer: OPTIMIZED
+    answer: OPTIMIZED()
 
   verify
     name: 'should optimize with an `arguments` based param reassignment (null args) (strict)'
@@ -27,7 +27,7 @@ describe 'test param reassignment STRICT', ->
       return
     # args: no arg
     # context: no context
-    answer: OPTIMIZED
+    answer: OPTIMIZED()
 
   verify
     name: 'should optimize with an arguments.length based param reassignment (empty array args) (strict)'
@@ -37,7 +37,7 @@ describe 'test param reassignment STRICT', ->
       return
     args: []
     # context: no context
-    answer: OPTIMIZED
+    answer: OPTIMIZED()
 
   verify
     name: 'should optimize with an arguments.length based param reassignment (one args) (strict)'
@@ -47,7 +47,7 @@ describe 'test param reassignment STRICT', ->
       return
     args: ['a']
     # context: no context
-    answer: OPTIMIZED
+    answer: OPTIMIZED()
 
   verify
     name: 'should optimize with an arguments.length based param reassignment (two args) (strict)'
@@ -57,7 +57,7 @@ describe 'test param reassignment STRICT', ->
       return
     args: ['a', 'b']
     # context: no context
-    answer: OPTIMIZED
+    answer: OPTIMIZED()
 
   verify
     name: 'should NOT optimize an arguments[#] null check based var assignment WHEN index is INVALID'
@@ -68,7 +68,7 @@ describe 'test param reassignment STRICT', ->
     ```
     args: ['a']
     # context: no context
-    answer: NOT_OPTIMIZED
+    answer: NOT_OPTIMIZED()
 
   verify
     name: 'should optimize an arguments[#] null check based var assignment WHEN index is valid'
@@ -79,7 +79,7 @@ describe 'test param reassignment STRICT', ->
     ```
     args: ['a', 'b']
     # context: no context
-    answer: OPTIMIZED
+    answer: OPTIMIZED()
 
 
   verify
@@ -87,27 +87,27 @@ describe 'test param reassignment STRICT', ->
     fn: `function() { var a = arguments[0] || {}; }`
     # args: no args
     # context: no context
-    answer: NOT_OPTIMIZED
+    answer: NOT_OPTIMIZED()
 
   verify
     name: 'should NOT optimize an || style null check based var assignment WHEN index is INVALID'
     fn: `function() { var a = arguments[0] || {}; }`
     args: []
     # context: no context
-    answer: NOT_OPTIMIZED
+    answer: NOT_OPTIMIZED()
 
   verify
     name: 'should optimize an || style null check based var assignment WHEN index is valid'
     fn: `function() { var a = arguments[0] || {}; }`
     args: ['a']
     # context: no context
-    answer: OPTIMIZED
+    answer: OPTIMIZED()
 
   verify
     name: 'should optimize an || style null check based param reassignment'
     fn: `function(a) { a = a || {}; }`
     args: ['a']
     # context: no context
-    answer: OPTIMIZED
+    answer: OPTIMIZED()
 
   return

@@ -10,42 +10,42 @@ describe 'test arguments slicing', ->
     fn    : -> args = Array.prototype.slice.call arguments ; return
     args  : [{blah:'blah'}, 'b', 3]
     # context: no context
-    answer: NOT_OPTIMIZED
+    answer: NOT_OPTIMIZED()
 
   verify
     name  : 'should NOT optimize slicing arguments with [].slice'
     fn    : -> args = [].slice.call arguments ; return
     args  : [{blah:'blah'}, 'b', 3]
     # context: no context
-    answer: NOT_OPTIMIZED
+    answer: NOT_OPTIMIZED()
 
   verify
     name  : 'should NOT optimize slicing arguments with [].slice and a start index'
     fn    : -> args = [].slice.call arguments, 1 ; return
     args  : [{blah:'blah'}, 'b', 3]
     # context: no context
-    answer: NOT_OPTIMIZED
+    answer: NOT_OPTIMIZED()
 
   verify
     name  : 'should NOT optimize slicing arguments with [].slice with start/end indexes'
     fn    : -> args = [].slice.call arguments, 1, 2 ; return
     args  : [{blah:'blah'}, 'b', 3]
     # context: no context
-    answer: NOT_OPTIMIZED
+    answer: NOT_OPTIMIZED()
 
   do ->
-    is4 = process.versions.node[0] is '4'
-    answer = if is4 then NOT_OPTIMIZED else OPTIMIZED
+    isOptimizing = process.versions.node[0] in ['4', '6', '7', '8'] # 4 used to *not* optimize it.
+    answer = if isOptimizing then OPTIMIZED() else NOT_OPTIMIZED()
 
     verify
-      name: "should#{if is4 then ' NOT' else ''} optimize using Array.apply to create arguments as an array"
+      name: "should#{if isOptimizing then '' else ' NOT'} optimize using Array.apply to create arguments as an array"
       fn  : -> args = Array.apply null, arguments ; return
       args: ['a', 'b']
       # context: no context
       answer: answer
 
     verify
-      name  : "should#{if is4 then ' NOT' else ''} optimize using Array.apply and truncating length"
+      name  : "should#{if isOptimizing then '' else ' NOT'} optimize using Array.apply and truncating length"
       fn    : -> # keep only first 2 via truncating
         args = Array.apply null, arguments
         args.length = 2
@@ -64,6 +64,6 @@ describe 'test arguments slicing', ->
       return args
     args  : [{blah:'blah'}, 'b', 3, (->)]
     # context: no context
-    answer: OPTIMIZED
+    answer: OPTIMIZED()
 
   return

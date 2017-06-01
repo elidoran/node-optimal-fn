@@ -11,7 +11,7 @@ describe 'test optimize.check', ->
     fn    : -> [].slice.call arguments ; return
     # args: no args
     # context: no context
-    answer: NOT_OPTIMIZED
+    answer: NOT_OPTIMIZED()
 
   do ->
     fnOptimized = ->
@@ -22,7 +22,7 @@ describe 'test optimize.check', ->
       fn    : fnOptimized
       # args: no args
       # context: no context
-      answer: OPTIMIZED
+      answer: OPTIMIZED()
 
     return
 
