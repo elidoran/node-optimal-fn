@@ -24,10 +24,10 @@
     "test7": "nave use 7.10 npm test",
     "test8": "nave use 8.0 npm test",
     "test-all": "npm run test4 && npm run test6 && npm run test7 && npm run test8",
-    "pre-coverage": "npm run clean",
-    "coverage": "istanbul cover _mocha -- --compilers coffee:coffee-script/register --require build/coverage.js -R spec  test/lib/coffee test/lib/js",
-    "pre-coverage-lcov": "npm run clean",
-    "coverage-lcov": "istanbul cover _mocha --report lcovonly -- --compilers coffee:coffee-script/register --require build/coverage.js -R spec  test/lib/coffee test/lib/js"
+    "precoverage": "npm run clean",
+    "coverage": "istanbul cover -x 'build/**' _mocha -- --compilers coffee:coffee-script/register --require build/coverage.js -R spec  test/lib/coffee test/lib/js",
+    "precoverage-lcov": "npm run clean",
+    "coverage-lcov": "istanbul cover -x 'build/**' _mocha --report lcovonly -- --compilers coffee:coffee-script/register --require build/coverage.js -R spec  test/lib/coffee test/lib/js"
   },
   "repository": {
     "type": "git",
