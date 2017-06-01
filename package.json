@@ -1,6 +1,6 @@
 {
   "name": "@optimal/fn",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Force V8 to try to optimize a function and check optimization status in nodes 4, 6, 7, and 8.",
   "main": "lib",
   "keywords": [
