@@ -28,6 +28,11 @@ See:
       kOptimized = 1 << 4,       // 16
       kTurboFanned = 1 << 5,     // 32
       kInterpreted = 1 << 6,     // 64
+      kMarkedForOptimization = 1 << 7,            //  128
+      kMarkedForConcurrentOptimization = 1 << 8,  //  256
+      kOptimizingConcurrently = 1 << 9,           //  512
+      kIsExecuting = 1 << 10,                     // 1024
+      kTopmostFrameIsTurboFanned = 1 << 11,       // 2048
     };
     ```
 
