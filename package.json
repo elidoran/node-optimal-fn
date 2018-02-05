@@ -18,16 +18,16 @@
     "clean": "rm -rf lib/*.js",
     "prepublish": "npm run build",
     "postpublish": "npm run clean",
-    "test": "_mocha --compilers coffee:coffee-script/register --reporter spec --check-leaks test/lib/coffee test/lib/js",
+    "test": "_mocha --require coffee-script/register --reporter spec --check-leaks test/lib/coffee test/lib/js",
     "test4": "nave use 4.8 npm test",
-    "test6": "nave use 6.10 npm test",
-    "test7": "nave use 7.10 npm test",
-    "test8": "nave use 8.0 npm test",
-    "test-all": "npm run test4 && npm run test6 && npm run test7 && npm run test8",
+    "test6": "nave use 6.12 npm test",
+    "test8": "nave use 8.9 npm test",
+    "test9": "nave use 9.5 npm test",
+    "test-all": "npm run test4 && npm run test6 && npm run test8 && npm run test9",
     "precoverage": "npm run clean",
-    "coverage": "istanbul cover -x 'build/**' _mocha -- --compilers coffee:coffee-script/register --require build/coverage.js -R spec  test/lib/coffee test/lib/js",
+    "coverage": "istanbul cover -x 'build/**' _mocha -- --require coffee-script/register --require build/coverage.js -R spec  test/lib/coffee test/lib/js",
     "precoverage-lcov": "npm run clean",
-    "coverage-lcov": "istanbul cover -x 'build/**' _mocha --report lcovonly -- --compilers coffee:coffee-script/register --require build/coverage.js -R spec  test/lib/coffee test/lib/js"
+    "coverage-lcov": "istanbul cover -x 'build/**' _mocha --report lcovonly -- --require coffee-script/register --require build/coverage.js -R spec  test/lib/coffee test/lib/js"
   },
   "repository": {
     "type": "git",
@@ -36,11 +36,11 @@
   "bugs": "http://github.com/elidoran/node-optimal-fn/issues",
   "devDependencies": {
     "coffee-coverage": "^2.0.1",
-    "coffee-script": "^1.12.6",
+    "coffee-script": "^1.12.7",
     "coffeelint": "^1.16.0",
-    "coveralls": "^2.13.1",
+    "coveralls": "^2.13.3",
     "istanbul": "^0.4.5",
-    "mocha": "^3.4.2",
+    "mocha": "^5.0.0",
     "mocha-lcov-reporter": "^1.3.0"
   },
   "dependencies": {},
