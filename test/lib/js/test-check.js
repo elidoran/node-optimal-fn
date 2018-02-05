@@ -1,30 +1,39 @@
 'use strict';
-var NOT_OPTIMIZED, OPTIMIZED, assert, check, optimize, ref, verify;
-
-assert = require('assert');
+var check, node, optimize, verify;
 
 optimize = require('../../../lib');
 
 check = optimize.check;
 
-ref = require('../../helpers'), verify = ref.verify, OPTIMIZED = ref.OPTIMIZED, NOT_OPTIMIZED = ref.NOT_OPTIMIZED;
+verify = require('../../helpers').verify;
+node   = require('../../helpers').node;
 
 describe('test optimize.check', function() {
   verify({
-    name: 'with non-optimized function',
+    name: 'optimizable function checked',
     fn: function() {
-      [].slice.call(arguments);
+      return {
+        // TODO: find a way to prevent optimization.
+        // I tried these already:
+        //   https://github.com/petkaantonov/bluebird/wiki/Optimization-killers
+        // prevents optimization in node 4+6, but not node 8+9
+        __proto__: 1
+      };
     },
-    answer: NOT_OPTIMIZED()
+    // args: no args
+    // context: no context
+    answer: node >= 8
   });
   (function() {
     var fnOptimized;
     fnOptimized = function() {};
     optimize(fnOptimized);
     verify({
-      name: 'with optimized function',
+      name: 'optimizable function checked',
       fn: fnOptimized,
-      answer: OPTIMIZED()
+      // args: no args
+      // context: no context
+      answer: true
     });
   })();
 });

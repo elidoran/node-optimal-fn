@@ -1,15 +1,12 @@
 'use strict';
-var NOT_OPTIMIZED, OPTIMIZED, assert, optimize, ref, verify;
+var node, verify;
 
-assert = require('assert');
-
-optimize = require('../../../lib');
-
-ref = require('../../helpers'), verify = ref.verify, OPTIMIZED = ref.OPTIMIZED, NOT_OPTIMIZED = ref.NOT_OPTIMIZED;
+verify = require('../../helpers').verify;
+node   = require('../../helpers').node;
 
 describe('test arguments slicing', function() {
-  verify({
-    name: 'should NOT optimize slicing arguments with Array.prototype.slice',
+  verify({ // 8-9 optimizes
+    name: 'optimize slicing arguments with Array.prototype.slice',
     fn: function() {
       var args;
       args = Array.prototype.slice.call(arguments);
@@ -17,12 +14,15 @@ describe('test arguments slicing', function() {
     args: [
       {
         blah: 'blah'
-      }, 'b', 3
+      },
+      'b',
+      3
     ],
-    answer: NOT_OPTIMIZED()
+    // context: no context
+    answer: (8 <= node && node <= 9)
   });
-  verify({
-    name: 'should NOT optimize slicing arguments with [].slice',
+  verify({ // 8-9 optimizes
+    name: 'optimize slicing arguments with [].slice',
     fn: function() {
       var args;
       args = [].slice.call(arguments);
@@ -30,12 +30,15 @@ describe('test arguments slicing', function() {
     args: [
       {
         blah: 'blah'
-      }, 'b', 3
+      },
+      'b',
+      3
     ],
-    answer: NOT_OPTIMIZED()
+    // context: no context
+    answer: (8 <= node && node <= 9)
   });
-  verify({
-    name: 'should NOT optimize slicing arguments with [].slice and a start index',
+  verify({ // 8-9 optimizes
+    name: 'optimize slicing arguments with [].slice and a start index',
     fn: function() {
       var args;
       args = [].slice.call(arguments, 1);
@@ -43,12 +46,15 @@ describe('test arguments slicing', function() {
     args: [
       {
         blah: 'blah'
-      }, 'b', 3
+      },
+      'b',
+      3
     ],
-    answer: NOT_OPTIMIZED()
+    // context: no context
+    answer: (8 <= node && node <= 9)
   });
-  verify({
-    name: 'should NOT optimize slicing arguments with [].slice with start/end indexes',
+  verify({ // 8-9 optimizes
+    name: 'optimize slicing arguments with [].slice with start/end indexes',
     fn: function() {
       var args;
       args = [].slice.call(arguments, 1, 2);
@@ -56,43 +62,45 @@ describe('test arguments slicing', function() {
     args: [
       {
         blah: 'blah'
-      }, 'b', 3
+      },
+      'b',
+      3
     ],
-    answer: NOT_OPTIMIZED()
+    // context: no context
+    answer: (8 <= node && node <= 9)
   });
-  (function() {
-    var answer, isOptimizing, ref1;
-    isOptimizing = (ref1 = process.versions.node[0]) === '4' || ref1 === '6' || ref1 === '7' || ref1 === '8';
-    answer = isOptimizing ? OPTIMIZED() : NOT_OPTIMIZED();
-    verify({
-      name: "should" + (isOptimizing ? '' : ' NOT') + " optimize using Array.apply to create arguments as an array",
-      fn: function() {
-        var args;
-        args = Array.apply(null, arguments);
-      },
-      args: ['a', 'b'],
-      answer: answer
-    });
-    verify({
-      name: "should" + (isOptimizing ? '' : ' NOT') + " optimize using Array.apply and truncating length",
-      fn: function() {
-        var args;
-        args = Array.apply(null, arguments);
-        args.length = 2;
-      },
-      args: [
-        {
-          blah: 'blah'
-        }, 'b', 3
-      ],
-      answer: answer
-    });
-  })();
-  verify({
-    name: 'should optimize creating with array loop to slice only part of arguments',
+  verify({ // 4-9 optimizes
+    name: 'optimize using Array.apply to create arguments as an array',
     fn: function() {
+      var args;
+      args = Array.apply(null, arguments);
+    },
+    args: ['a', 'b'],
+    // context: no context
+    answer: true
+  });
+  verify({ // 4-9 optimizes
+    name: 'optimize using Array.apply and truncating length',
+    fn: function() { // keep only first 2 via truncating
+      var args;
+      args = Array.apply(null, arguments);
+      args.length = 2;
+    },
+    args: [
+      {
+        blah: 'blah'
+      },
+      'b',
+      3
+    ],
+    // context: no context
+    answer: true
+  });
+  verify({ // 4-9 optimizes
+    name: 'optimize creating with array loop to slice only part of arguments',
+    fn: function() { // keep only middle 2
       var arg, args, i, index, len;
-      args = new Array(Math.max(arguments.length, 2));
+      args = new Array(Math.max(arguments.length, 2)); //   like slice(1, 3)
       for (index = i = 0, len = arguments.length; i < len; index = ++i) {
         arg = arguments[index];
         if ((1 <= index && index < 3)) {
@@ -104,8 +112,12 @@ describe('test arguments slicing', function() {
     args: [
       {
         blah: 'blah'
-      }, 'b', 3, (function() {})
+      },
+      'b',
+      3,
+      (function() {})
     ],
-    answer: OPTIMIZED()
+    // context: no context
+    answer: true
   });
 });

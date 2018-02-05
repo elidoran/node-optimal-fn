@@ -1,20 +1,18 @@
-var NOT_OPTIMIZED, OPTIMIZED, assert, optimize, ref, verify;
+var node, verify;
 
-assert = require('assert');
-
-optimize = require('../../../lib');
-
-ref = require('../../helpers'), verify = ref.verify, OPTIMIZED = ref.OPTIMIZED, NOT_OPTIMIZED = ref.NOT_OPTIMIZED;
+verify = require('../../helpers').verify;
+node   = require('../../helpers').node;
 
 describe('test param reassignment SLOPPY', function() {
   verify({
-    name: 'should optimize with null check param reassignment',
+    name: 'optimize with null check param reassignment',
     fn: function fnNullReassign(a) { if (a === void 0) a = {}; },
     args: ['a'],
-    answer: OPTIMIZED()
+    // context: no context
+    answer: true
   });
   verify({
-    name: 'should optimize a function with null check',
+    name: 'optimize a function with null check',
     fn: function(a, b) {
       return b != null ? b : b = {};
     },
@@ -23,10 +21,11 @@ describe('test param reassignment SLOPPY', function() {
         blah: 'blah'
       }
     ],
-    answer: OPTIMIZED()
+    // context: no context
+    answer: true
   });
   verify({
-    name: 'should NOT optimize with an `arguments` based param reassignment (null args)',
+    name: 'optimize with an `arguments` based param reassignment (null args)',
     fn: function(a) {
       if (arguments.length < 1) {
         a = {};
@@ -35,10 +34,12 @@ describe('test param reassignment SLOPPY', function() {
         console.log('easy as 123');
       }
     },
-    answer: NOT_OPTIMIZED()
+    // args: no arg
+    // context: no context
+    answer: node >= 8
   });
   verify({
-    name: 'should NOT optimize with an arguments.length based param reassignment (empty array args)',
+    name: 'optimize with an arguments.length based param reassignment (empty array args)',
     fn: function(a) {
       if (arguments.length < 1) {
         a = {};
@@ -48,10 +49,11 @@ describe('test param reassignment SLOPPY', function() {
       }
     },
     args: [],
-    answer: NOT_OPTIMIZED()
+    // context: no context
+    answer: node >= 8
   });
   verify({
-    name: 'should NOT optimize with an arguments.length based param reassignment (one args)',
+    name: 'optimize with an arguments.length based param reassignment (one args)',
     fn: function(a) {
       if (arguments.length < 1) {
         a = {};
@@ -61,10 +63,11 @@ describe('test param reassignment SLOPPY', function() {
       }
     },
     args: ['a'],
-    answer: NOT_OPTIMIZED()
+    // context: no context
+    answer: node >= 8
   });
   verify({
-    name: 'should NOT optimize with an arguments.length based param reassignment (two args)',
+    name: 'optimize with an arguments.length based param reassignment (two args)',
     fn: function(a) {
       if (arguments.length < 1) {
         a = {};
@@ -74,49 +77,57 @@ describe('test param reassignment SLOPPY', function() {
       }
     },
     args: ['a', 'b'],
-    answer: NOT_OPTIMIZED()
+    // context: no context
+    answer: node >= 8
   });
   verify({
-    name: 'should NOT optimize an arguments[#] null check based var assignment WHEN index is INVALID',
+    name: 'optimize an arguments[#] null check based var assignment WHEN index is INVALID',
     fn:  function() {
       var a = arguments[0]
         , b = arguments[1] !== null ? arguments[1] : {}
     }
     ,
     args: ['a'],
-    answer: NOT_OPTIMIZED()
+    // context: no context
+    answer: node >= 8
   });
   verify({
-    name: 'should optimize an arguments[#] null check based var assignment WHEN index is valid',
+    name: 'optimize an arguments[#] null check based var assignment WHEN index is valid',
     fn: function() {
       var a = arguments[0]
         , b = arguments[1] !== null ? arguments[1] : {}
     }
     ,
     args: ['a', 'b'],
-    answer: OPTIMIZED()
+    // context: no context
+    answer: true
   });
   verify({
-    name: 'should NOT optimize an || style null check based var assignment WHEN index is INVALID',
+    name: 'optimize an || style null check based var assignment WHEN index is INVALID',
     fn: function() { var a = arguments[0] || {}; },
-    answer: NOT_OPTIMIZED()
+    // args: no args
+    // context: no context
+    answer: node >= 8
   });
   verify({
-    name: 'should NOT optimize an || style null check based var assignment WHEN index is INVALID',
+    name: 'optimize an || style null check based var assignment WHEN index is INVALID',
     fn: function() { var a = arguments[0] || {}; },
     args: [],
-    answer: NOT_OPTIMIZED()
+    // context: no context
+    answer: node >= 8
   });
   verify({
-    name: 'should optimize an || style null check based var assignment WHEN index is valid',
+    name: 'optimize an || style null check based var assignment WHEN index is valid',
     fn: function() { var a = arguments[0] || {}; },
     args: ['a'],
-    answer: OPTIMIZED()
+    // context: no context
+    answer: true
   });
   verify({
-    name: 'should optimize an || style null check based param reassignment',
+    name: 'optimize an || style null check based param reassignment',
     fn: function(a) { a = a || {}; },
     args: ['a'],
-    answer: OPTIMIZED()
+    // context: no context
+    answer: true
   });
 });
