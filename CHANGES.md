@@ -1,3 +1,12 @@
+## 0.3.0 - 2018/02/05
+
+1. update deps
+2. update mocha call args (replace --compilers with --require)
+3. update node versions tested (remove 7, add 9)
+4. move node version handling and answer building to helpers.coffee.
+5. update testing for new ability to optimize for different node versions.
+
+
 ## 0.2.0 - 2017/05/31
 
 1. add new implementation for node 8 which uses a bit mask instead of a single value.
