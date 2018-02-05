@@ -90,6 +90,12 @@ check8 = (fn) ->
       kOptimized = 1 << 4,       // 16
       kTurboFanned = 1 << 5,     // 32
       kInterpreted = 1 << 6,     // 64
+      // newer:
+      kMarkedForOptimization = 1 << 7,            //  128
+      kMarkedForConcurrentOptimization = 1 << 8,  //  256
+      kOptimizingConcurrently = 1 << 9,           //  512
+      kIsExecuting = 1 << 10,                     // 1024
+      kTopmostFrameIsTurboFanned = 1 << 11,       // 2048
     };
   ###
 
@@ -127,10 +133,32 @@ check8 = (fn) ->
   ### !pragma coverage-skip-block ###
   if (mask & 64) is 64 then result.interpreted = true
 
+  # # Recent additions to runtime.h.
+  # # I'm going to use them to mean similar things, optimized or TurboFan.
+  # # any suggestions are welcome.
+
+  # these three are different types of "will optimize"...
+
+  ### !pragma coverage-skip-block ###
+  if (mask & 128) is 128 then result.optimized = true
+
+  ### !pragma coverage-skip-block ###
+  if (mask & 256) is 256 then result.optimized = true
+
+  ### !pragma coverage-skip-block ###
+  if (mask & 512) is 512 then result.optimized = true
+
+  # this one means it's executing??
+  # ### !pragma coverage-skip-block ###
+  # if (mask & 1024) is 1024 then result.
+
+  ### !pragma coverage-skip-block ###
+  if (mask & 2048) is 2048 then result.TurboFan = true
+
   return result
 
 
 # fn - the function to check optimization status for
 module.exports.check =
   # node 8 uses v8 version which changed the result from a code to a bit mask.
-  if process.versions.node[0] is '8' then check8 else check4thru7
+  if Number(process.versions.node[0]) < 8 then check4thru7 else check8
