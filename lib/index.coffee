@@ -159,6 +159,11 @@ check8 = (fn) ->
 
 
 # fn - the function to check optimization status for
-module.exports.check =
-  # node 8 uses v8 version which changed the result from a code to a bit mask.
-  if Number(process.versions.node[0]) < 8 then check4thru7 else check8
+module.exports.check = do ->
+  # node 8+ uses v8 version which changed the result from a code to a bit mask.
+  # Node's version is multiple characters, so, split on the period.
+  string  = process.versions.node
+  index   = string.indexOf('.')
+  version = Number string.slice(0, index)
+
+  if version < 8 then check4thru7 else check8
