@@ -1,3 +1,13 @@
+## 0.3.1 - 2018/07/15
+
+1. update dev deps
+2. fix mocha test args (missing *.coffee)
+3. remove node 9, add node 10
+4. update node version processing for double digit version
+5. update test values for node 10's differences
+6. remove Gemnasium badge (Gemnasium bought by GitLab...)
+7. Link license header in README to the LICENSE file
+
 ## 0.3.0 - 2018/02/05
 
 1. update deps
