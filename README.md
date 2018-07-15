@@ -75,4 +75,4 @@ The result may contain these properties:
 4. **TurboFan** - when function is "optimized by TurboFan" then this is true, otherwise it is false.
 
 
-## MIT License
+## [MIT License](LICENSE)
