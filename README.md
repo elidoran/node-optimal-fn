@@ -1,6 +1,5 @@
 # @optimal/fn
 [![Build Status](https://travis-ci.org/elidoran/node-optimal-fn.svg?branch=master)](https://travis-ci.org/elidoran/node-optimal-fn)
-[![Dependency Status](https://gemnasium.com/elidoran/node-optimal-fn.png)](https://gemnasium.com/elidoran/node-optimal-fn)
 [![npm version](https://badge.fury.io/js/%40optimal%2Ffn.svg)](http://badge.fury.io/js/%40optimal%2Ffn)
 [![Coverage Status](https://coveralls.io/repos/github/elidoran/node-optimal-fn/badge.svg?branch=master)](https://coveralls.io/github/elidoran/node-optimal-fn?branch=master)
 
