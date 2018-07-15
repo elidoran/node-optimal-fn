@@ -24,7 +24,21 @@ describe 'test param reassignment SLOPPY', ->
       return
     # args: no arg
     # context: no context
-    answer: node >= 8
+    answer: switch node
+      when 8, 9 then true    # 8/9 optimize it
+      when 10                # 10 doesn't optimize it as of 10.6.0
+        # these are specific to node 10
+        interpreted: true
+        mask: 65
+        # the usuals
+        function: true
+        maybe: false
+        optimized: false
+        always: false
+        TurboFan: false
+
+      # defaults to false
+      else false
 
   verify
     name: 'optimize with an arguments.length based param reassignment (empty array args)'
@@ -34,7 +48,21 @@ describe 'test param reassignment SLOPPY', ->
       return
     args: []
     # context: no context
-    answer: node >= 8
+    answer: switch node
+      when 8, 9 then true    # 8/9 optimize it
+      when 10                # 10 doesn't optimize it as of 10.6.0
+        # these are specific to node 10
+        interpreted: true
+        mask: 65
+        # the usuals
+        function: true
+        maybe: false
+        optimized: false
+        always: false
+        TurboFan: false
+
+      # defaults to false
+      else false
 
   verify
     name: 'optimize with an arguments.length based param reassignment (one args)'
