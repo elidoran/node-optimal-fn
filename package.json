@@ -18,7 +18,7 @@
     "clean": "rm -rf lib/*.js",
     "prepublish": "npm run build",
     "postpublish": "npm run clean",
-    "test": "_mocha --require coffee-script/register --reporter spec --check-leaks test/lib/coffee",
+    "test": "_mocha --require coffee-script/register --reporter spec --check-leaks test/lib/coffee/*.coffee",
     "test4": "nave use 4.9 npm test",
     "test6": "nave use 6.14 npm test",
     "test8": "nave use 8.11 npm test",
@@ -40,7 +40,7 @@
     "coffeelint": "^1.16.0",
     "coveralls": "^2.13.3",
     "istanbul": "^0.4.5",
-    "mocha": "^5.0.0",
+    "mocha": "^5.2.0",
     "mocha-lcov-reporter": "^1.3.0"
   },
   "dependencies": {},
