@@ -2,7 +2,11 @@ assert = require 'assert'
 optimize = require '../lib'
 
 # use the first character of the node version to differentiate optimizations.
-node = exports.node = Number(process.versions.node[0])
+node = exports.node = do ->
+  string  = process.versions.node
+  index   = string.indexOf('.')
+  version = string.slice(0, index)
+  return Number(version)
 
 # build an "optimized" result
 exports.optimized = (mask, defaults) ->
@@ -43,7 +47,7 @@ exports.verify = (test) ->
   if test.answer is true
     name   = test.name
     # Node 4/6's optimized looks different than Node 8/9 (it's TurboFan'd)
-    answer = if 8 <= node <= 9 then exports.optimized(49, {TurboFan:true}) else exports.optimized()
+    answer = if 8 <= node then exports.optimized(49, {TurboFan:true}) else exports.optimized()
 
   else if typeof test.answer is 'object'
     name   = test.name
