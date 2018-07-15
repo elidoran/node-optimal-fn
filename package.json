@@ -18,7 +18,7 @@
     "clean": "rm -rf lib/*.js",
     "prepublish": "npm run build",
     "postpublish": "npm run clean",
-    "test": "_mocha --require coffee-script/register --reporter spec --check-leaks test/lib/coffee/*.coffee",
+    "test": "_mocha --require coffee-script/register --reporter spec --check-leaks test/lib/coffee/*.coffee test/lib/js/*.js",
     "test4": "nave use 4.9 npm test",
     "test6": "nave use 6.14 npm test",
     "test8": "nave use 8.11 npm test",
