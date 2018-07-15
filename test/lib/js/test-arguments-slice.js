@@ -19,7 +19,7 @@ describe('test arguments slicing', function() {
       3
     ],
     // context: no context
-    answer: (8 <= node && node <= 9)
+    answer: (8 <= node)
   });
   verify({ // 8-9 optimizes
     name: 'optimize slicing arguments with [].slice',
@@ -35,7 +35,7 @@ describe('test arguments slicing', function() {
       3
     ],
     // context: no context
-    answer: (8 <= node && node <= 9)
+    answer: (8 <= node)
   });
   verify({ // 8-9 optimizes
     name: 'optimize slicing arguments with [].slice and a start index',
@@ -51,7 +51,7 @@ describe('test arguments slicing', function() {
       3
     ],
     // context: no context
-    answer: (8 <= node && node <= 9)
+    answer: (8 <= node)
   });
   verify({ // 8-9 optimizes
     name: 'optimize slicing arguments with [].slice with start/end indexes',
@@ -67,7 +67,7 @@ describe('test arguments slicing', function() {
       3
     ],
     // context: no context
-    answer: (8 <= node && node <= 9)
+    answer: (8 <= node)
   });
   verify({ // 4-9 optimizes
     name: 'optimize using Array.apply to create arguments as an array',

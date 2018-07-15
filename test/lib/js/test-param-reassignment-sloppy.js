@@ -36,7 +36,27 @@ describe('test param reassignment SLOPPY', function() {
     },
     // args: no arg
     // context: no context
-    answer: node >= 8
+    answer: (function () {
+      // node 8/9 optimize it
+      if (node === 8 || node === 9) return true
+
+      // node 10 doesn't optimize it as of 10.6.0
+      else if (node === 10) return {
+        // spescific to node 10
+        interpreted: true,
+        mask: 65,
+        // the usuals
+        function: true,
+        maybe: false,
+        optimized: false,
+        always: false,
+        TurboFan: false
+      }
+
+      // defaults to false
+      else return false
+    })()
+
   });
   verify({
     name: 'optimize with an arguments.length based param reassignment (empty array args)',
@@ -50,7 +70,26 @@ describe('test param reassignment SLOPPY', function() {
     },
     args: [],
     // context: no context
-    answer: node >= 8
+    answer: (function () {
+      // node 8/9 optimize it
+      if (node === 8 || node === 9) return true
+
+      // node 10 doesn't optimize it as of 10.6.0
+      else if (node === 10) return {
+        // spescific to node 10
+        interpreted: true,
+        mask: 65,
+        // the usuals
+        function: true,
+        maybe: false,
+        optimized: false,
+        always: false,
+        TurboFan: false
+      }
+
+      // defaults to false
+      else return false
+    })()
   });
   verify({
     name: 'optimize with an arguments.length based param reassignment (one args)',
