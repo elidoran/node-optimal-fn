@@ -25,9 +25,9 @@
     "test10": "nave use 10.6 npm test",
     "test-all": "npm run test4 && npm run test6 && npm run test8 && npm run test10",
     "precoverage": "npm run clean",
-    "coverage": "istanbul cover -x 'build/**' _mocha -- --require coffee-script/register --require build/coverage.js -R spec  test/lib/coffee test/lib/js",
+    "coverage": "istanbul cover -x 'build/**' _mocha -- --require coffee-script/register --require build/coverage.js -R spec  test/lib/coffee/*.coffee test/lib/js/*.js",
     "precoverage-lcov": "npm run clean",
-    "coverage-lcov": "istanbul cover -x 'build/**' _mocha --report lcovonly -- --require coffee-script/register --require build/coverage.js -R spec  test/lib/coffee test/lib/js"
+    "coverage-lcov": "istanbul cover -x 'build/**' _mocha --report lcovonly -- --require coffee-script/register --require build/coverage.js -R spec  test/lib/coffee/*.coffee test/lib/js/*.js"
   },
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
   },
   "bugs": "http://github.com/elidoran/node-optimal-fn/issues",
   "devDependencies": {
-    "coffee-coverage": "^3.0.0",
+    "coffee-coverage": "^2.0.1",
     "coffee-script": "^1.12.7",
     "coffeelint": "^2.1.0",
     "coveralls": "^3.0.2",
